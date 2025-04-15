@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Speed Measurement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+            width: 70%;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+        .box:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+        }
+        .image-container {
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 50%;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.3);
+        }
+        footer {
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.3);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            padding: 5px;
+            font-size: 18px;
+            transition: transform 0.2s, color 0.3s;
+        }
+        ul li:hover {
+            transform: translateX(10px);
+            color: #f8b400;
+        }
+    </style>
+</head>
+<body>
+
+<header>🌪️ Understanding Wind Speed Measurement 🌪️</header>
+
+<div class="container">
+    <div class="box">
+        <h2>Introduction</h2>
+        <p>Wind speed is the rate at which air moves past a certain point. It plays a crucial role in weather forecasting, aviation, and maritime activities.</p>
+    </div>
+
+    <div class="box">
+        <h2>How is Wind Speed Measured?</h2>
+        <p>Wind speed is measured using an instrument called an anemometer. The most common type consists of rotating cups that capture the wind’s force.</p>
+    </div>
+
+    <div class="box">
+        <h2>Types of Anemometers</h2>
+        <p>There are different types of anemometers, including:</p>
+        <ul>
+            <li>🌬️ Cup Anemometer</li>
+            <li>🌪️ Vane Anemometer</li>
+            <li>🔥 Hot-wire Anemometer</li>
+            <li>🎵 Sonic Anemometer</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <h2>Importance of Measuring Wind Speed</h2>
+        <p>Measuring wind speed helps in weather predictions, energy generation, and even sports like sailing and flying.</p>
+    </div>
+
+    <div class="image-container">
+        <img src="wind8.png" alt="Anemometer">
+        <p>An example of a Cup Anemometer</p>
+    </div>
+</div>
+
+<footer>© 2025 Wind Science | Stay Safe, Stay Informed</footer>
+
+</body>
+</html>

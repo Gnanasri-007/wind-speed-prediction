@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Applications of GMDH Model</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212; /* Dark background matching the theme */
+      color: #f1f1f1;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 220px;
+      background-color: #1a1a1a;
+      padding-top: 60px;
+      padding-bottom: 30px;
+      box-shadow: 2px 0 10px rgba(0, 255, 255, 0.2); /* Cyan glow effect */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.4); /* Cyan-blue glow */
+    }
+
+    .sidebar a {
+      padding: 15px 20px;
+      display: block;
+      color: #00ffff; /* Cyan text */
+      text-decoration: none;
+      transition: 0.3s;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Neon effect */
+    }
+
+    .sidebar a:hover {
+      background-color: #00b7eb; /* Cyan-blue hover */
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+      border-left: 5px solid #00ffff; /* Cyan border */
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 40px 60px;
+      line-height: 1.8;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00ffff; /* Cyan text */
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 191, 255, 0.5); /* Neon glow */
+    }
+
+    section {
+      margin-bottom: 60px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #1b1b1b;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.1); /* Subtle cyan glow */
+      transition: transform 0.3s, margin-bottom 0.3s;
+    }
+
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Enhanced glow on hover */
+    }
+
+    .application-detail {
+      margin-top: 20px;
+      padding: 20px;
+      background: #2b2b2b;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.1);
+    }
+
+    .application-detail h3 {
+      font-size: 24px;
+      color: #00ffff; /* Cyan text */
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); /* Neon effect */
+    }
+
+    .application-detail p {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #111;
+      color: #888;
+      border-top: 1px solid #00b7eb; /* Cyan-blue border */
+      margin-top: 100px;
+      text-shadow: 0 0 2px rgba(0, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="gmdh4.png" alt="Logo">
+    <a href="#weather_forecasting">Weather Forecasting</a>
+    <a href="#financial_prediction">Financial Prediction</a>
+    <a href="#industrial_control">Industrial Control</a>
+    <a href="#medical_diagnosis">Medical Diagnosis</a>
+  </div>
+
+  <div class="main-content">
+    <h1>🌐 Applications of GMDH Model</h1>
+
+    <!-- Weather Forecasting Section -->
+    <section id="weather_forecasting">
+      <h2>☀️ Weather Forecasting</h2>
+      <div class="application-detail">
+        <h3>1. Weather Forecasting</h3>
+        <p>GMDH excels in predicting weather patterns, such as wind speed, temperature, and precipitation, by analyzing complex and noisy meteorological data. Its self-organizing nature allows it to adapt to varying conditions effectively.</p>
+      </div>
+    </section>
+
+    <!-- Financial Prediction Section -->
+    <section id="financial_prediction">
+      <h2>💹 Financial Prediction</h2>
+      <div class="application-detail">
+        <h3>2. Financial Prediction</h3>
+        <p>In finance, GMDH is used to forecast stock prices, market trends, and risk assessment. Its ability to handle nonlinear relationships and automate feature selection makes it valuable for dynamic market analysis.</p>
+      </div>
+    </section>
+
+    <!-- Industrial Control Section -->
+    <section id="industrial_control">
+      <h2>🏭 Industrial Control</h2>
+      <div class="application-detail">
+        <h3>3. Industrial Control</h3>
+        <p>GMDH supports industrial applications like process optimization and fault detection by modeling complex systems. Its incremental learning helps maintain accuracy in real-time control environments.</p>
+      </div>
+    </section>
+
+    <!-- Medical Diagnosis Section -->
+    <section id="medical_diagnosis">
+      <h2>🏥 Medical Diagnosis</h2>
+      <div class="application-detail">
+        <h3>4. Medical Diagnosis</h3>
+        <p>In healthcare, GMDH aids in diagnosing diseases by analyzing patient data and identifying patterns. Its interpretable polynomial models assist in understanding diagnostic outcomes.</p>
+      </div>
+    </section>
+
+    <footer>© 2025 GMDH Explorer | Smart Models Made Smarter</footer>
+  </div>
+
+</body>
+</html>

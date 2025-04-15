@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advantages of GMDH</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212; /* Dark background matching the image */
+      color: #f1f1f1;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 220px;
+      background-color: #1a1a1a;
+      padding-top: 60px;
+      padding-bottom: 30px;
+      box-shadow: 2px 0 10px rgba(0, 255, 255, 0.2); /* Cyan glow effect */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.4); /* Cyan-blue glow */
+    }
+
+    .sidebar a {
+      padding: 15px 20px;
+      display: block;
+      color: #00ffff; /* Cyan text */
+      text-decoration: none;
+      transition: 0.3s;
+      width: 100%;
+      text-align: center;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* Neon effect */
+    }
+
+    .sidebar a:hover {
+      background-color: #00b7eb; /* Cyan-blue hover */
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+      border-left: 5px solid #00ffff; /* Cyan border */
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 40px 60px;
+      line-height: 1.8;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00ffff; /* Cyan text */
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 191, 255, 0.5); /* Neon glow */
+    }
+
+    section {
+      margin-bottom: 60px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #1b1b1b;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.1); /* Subtle cyan glow */
+      transition: transform 0.3s, margin-bottom 0.3s;
+    }
+
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Enhanced glow on hover */
+    }
+
+    .tabs {
+      display: flex;
+      margin-top: 20px;
+      overflow-x: auto;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background-color: #2b2b2b;
+      color: #00ffff; /* Cyan text */
+      margin-right: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+      box-shadow: 0 0 5px rgba(0, 191, 255, 0.2);
+    }
+
+    .tab:hover {
+      background-color: #00b7eb; /* Cyan-blue hover */
+      color: #fff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .tab-content {
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+      color: #ddd;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #111;
+      color: #888;
+      border-top: 1px solid #00b7eb; /* Cyan-blue border */
+      margin-top: 100px;
+      text-shadow: 0 0 2px rgba(0, 255, 255, 0.3);
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background-color: #333;
+      padding: 30px;
+      border-radius: 10px;
+      width: 50%;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.2); /* Cyan glow */
+      animation: popupFadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .popup-close {
+      background-color: #00b7eb; /* Cyan-blue button */
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+      transition: background-color 0.3s ease;
+    }
+
+    .popup-close:hover {
+      background-color: #00ffff; /* Brighter cyan on hover */
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="gmdh5.png" alt="Logo">
+    <a href="#advantage">Overview</a>
+    <a href="#comparison">GMDH vs Others</a>
+    <a href="#usecases">Why Choose GMDH?</a>
+  </div>
+
+  <div class="main-content">
+    <h1>⚡ Advantages of GMDH</h1>
+
+    <!-- Overview -->
+    <section id="advantage">
+      <h2>🚀 Why GMDH Stands Out</h2>
+      <p>Group Method of Data Handling (GMDH) offers unique strengths in predictive modeling by blending algorithmic automation with deep mathematical adaptability. Its ability to self-organize and evolve model complexity based on performance makes it ideal for real-world data science problems.</p>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison">
+      <h2>🔄 GMDH vs Other Modeling Techniques</h2>
+      <div class="tabs">
+        <div class="tab" onclick="showTab('vs_ann')">Compared to Neural Networks</div>
+        <div class="tab" onclick="showTab('vs_svm')">Compared to SVM</div>
+        <div class="tab" onclick="showTab('vs_reg')">Compared to Regression</div>
+      </div>
+      <div id="vs_ann" class="tab-content active">
+        <p><strong>✅ GMDH vs Neural Networks:</strong><br>
+        - No manual layer configuration<br>
+        - GMDH selects the optimal model structure automatically<br>
+        - Easier interpretability due to polynomial relationships<br>
+        - Less prone to overfitting due to internal validation at each layer</p>
+      </div>
+      <div id="vs_svm" class="tab-content">
+        <p><strong>✅ GMDH vs Support Vector Machines:</strong><br>
+        - GMDH is more transparent in model structure<br>
+        - Does not require kernel selection<br>
+        - Handles noisy and nonlinear data more flexibly<br>
+        - Builds model incrementally, layer-by-layer</p>
+      </div>
+      <div id="vs_reg" class="tab-content">
+        <p><strong>✅ GMDH vs Linear/Polynomial Regression:</strong><br>
+        - GMDH goes beyond fixed-degree polynomials<br>
+        - Finds the best subset of features automatically<br>
+        - Creates multiple candidate models and selects the best-performing<br>
+        - Self-organizes model depth and complexity dynamically</p>
+      </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="usecases">
+      <h2>🧠 When to Use GMDH?</h2>
+      <p>If you're working with:</p>
+      <ul>
+        <li>Complex, nonlinear datasets</li>
+        <li>High noise or missing data</li>
+        <li>Need for automatic feature/model selection</li>
+        <li>Desire for interpretable models with polynomial structure</li>
+      </ul>
+      <p>Then GMDH could be your ideal solution.</p>
+    </section>
+
+    <footer>© 2025 GMDH Explorer | Smart Models Made Smarter</footer>
+  </div>
+
+  <script>
+    function showTab(id) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(tab => tab.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

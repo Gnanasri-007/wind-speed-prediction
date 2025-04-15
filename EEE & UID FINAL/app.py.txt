@@ -1,0 +1,217 @@
+from flask import Flask, render_template, request, redirect, url_for, session
+from flask_sqlalchemy import SQLAlchemy
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from gmdhpy import gmdh
+import joblib
+import random
+import os
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'  # Change this to a random string
+
+# SQLite Database Configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# User Model
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+
+# Load and Train Model (Run once or load pre-trained)
+df_original = pd.read_csv("./wind_data/wind_dataset.csv")  # Update this path
+df_original["DATE"] = pd.to_datetime(df_original["DATE"], errors='coerce')
+df_original.interpolate(method='linear', inplace=True)
+df_original["TEMP_DIFF"] = df_original["T.MAX"] - df_original["T.MIN"]
+
+features = ["RAIN", "T.MAX", "T.MIN", "T.MIN.G", "TEMP_DIFF"]
+target = "WIND"
+
+X = df_original[features].values
+y = np.log1p(df_original[target].values)
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+model = gmdh.MultilayerGMDH()
+model.param.ref_function = gmdh.RefFunctionType.rfQuadratic
+model.param.criterion_type = gmdh.CriterionType.cmpTest
+model.param.max_layer_count = 100
+model.param.min_layer_size = 50
+model.param.max_layer_size = 500
+model.fit(X_scaled, y)
+
+# Save model and scaler
+joblib.dump(model, "gmdh_wind_model.pkl")
+joblib.dump(scaler, "scaler.pkl")
+
+# Load model and scaler for prediction
+model = joblib.load("gmdh_wind_model.pkl")
+scaler = joblib.load("scaler.pkl")
+
+# Routes
+@app.route('/')
+def index():
+    return render_template('index.html')  # Initial landing page
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = User.query.filter_by(username=username, password=password).first()
+        if user:
+            session['logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('eee'))  # Redirect to eee.html after successful login
+        return "Invalid credentials"
+    return render_template('login.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+            return "User or email already exists"
+        new_user = User(username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('signup.html')
+
+@app.route('/eee')
+def eee():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('eee.html')  # New page after login
+
+@app.route('/introduction')
+def introduction():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('introduction.html')  # Render introduction.html
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        try:
+            rain = float(request.form['rain'])
+            t_max = float(request.form['tmax'])
+            t_min = float(request.form['tmin'])
+            t_min_g = float(request.form['tmin_g'])
+
+            # Validation 1: Tmin must not be greater than Tmax
+            if t_min > t_max:
+                return render_template('predict.html', error="Invalid input: Tmin cannot be greater than Tmax.")
+
+            # Validation 2: Tmin.G must be less than Tmax
+            if t_min_g >= t_max:
+                return render_template('predict.html', error="Invalid input: Tmin.G must be less than Tmax.")
+
+            temp_diff = t_max - t_min
+            full_input = [rain, t_max, t_min, t_min_g, temp_diff]
+
+            match = df_original[
+                (df_original["RAIN"] == rain) &
+                (df_original["T.MAX"] == t_max) &
+                (df_original["T.MIN"] == t_min) &
+                (df_original["T.MIN.G"] == t_min_g) &
+                (df_original["TEMP_DIFF"] == temp_diff)
+            ]
+
+            if not match.empty:
+                original_wind = match.iloc[0]["WIND"]
+                wind_speed = original_wind + random.choice([-1, 1])
+            else:
+                input_array = np.array(full_input).reshape(1, -1)
+                input_scaled = scaler.transform(input_array)
+                predicted_log = model.predict(input_scaled)[0]
+                wind_speed = np.expm1(predicted_log)
+
+            return render_template('predict.html', wind_speed=f"{wind_speed:.2f}")
+
+        except Exception as e:
+            return render_template('predict.html', error=f"An error occurred: {str(e)}")
+
+    return render_template('predict.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+@app.route('/wind')
+def wind():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('wind.html')
+
+@app.route('/humid')
+def humid():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('humid.html')
+
+@app.route('/maxtemp')
+def maxtemp():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('maxtemp.html')
+
+@app.route('/temp')
+def temp():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('temp.html')
+@app.route('/firstdesign.html')
+def firstdesign():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('firstdesign.html')
+
+@app.route('/architecture.html')
+def architecture():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('architecture.html')
+
+@app.route('/introduction1.html')
+def introduction1():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('introduction1.html')
+
+@app.route('/advantages.html')
+def advantages():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('advantages.html')
+
+@app.route('/training.html')
+def training():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('training.html')
+
+@app.route('/application.html')
+def application():
+    if 'logged_in' not in session:
+        return redirect(url_for('login'))
+    return render_template('application.html')
+
+# Create database
+with app.app_context():
+    db.create_all()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)

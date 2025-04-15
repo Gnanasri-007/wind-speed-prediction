@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Scroll with Appearing Boxes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        body {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: url('{{ url_for('static', filename='air.jpeg') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Account Icon Container */
+        .account-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            img {
+            width: 50px;
+            height: auto;
+           }
+
+        }
+
+        /* Account Icon */
+        .account-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out, background 0.3s;
+        }
+
+        .account-icon:hover {
+            transform: scale(1.1);
+            background: rgba(251, 116, 5, 0.9);
+        }
+
+        .account-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Login Caption */
+        .login-caption {
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .account-container:hover .login-caption {
+            color: rgba(251, 116, 5, 0.9);
+        }
+
+        .scroll-container {
+            width: 100vw;
+            overflow-x: auto;
+            display: flex;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding: 20px;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .box {
+            min-width: 70vw;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column; /This makes the flex container arrange its child 
+            ren vertically (from top to bottom) instead of the default horizontal
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            scroll-snap-align: center;
+            margin: 0 10vw;
+            padding: 20px;
+            transition: all 0.5s ease-in-out;
+            transform: scale(0.8);
+            opacity: 0.5;
+            font-family: "Times New Roman", serif;
+        }
+
+        .box:target {
+            transform: scale(1);
+            opacity: 1;
+            border: 4px solid rgba(251, 116, 5, 0.8);
+            box-shadow: 0px 0px 20px rgba(251, 116, 5, 0.8);
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(251, 116, 5, 0.8);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Account Creation Icon with Caption -->
+    <div class="account-container">
+        <a href="{{ url_for('predict') }}">
+            <img src="{{ url_for('static', filename='soya.png') }}" alt="Create Account">
+        </a>
+        <div class="login-caption">Login</div>
+    </div>
+
+    <div class="scroll-container">
+        <a href="#box1" class="box" id="box1">
+            <h2>Short-Term Wind Speed Prediction</h2>
+            <p>
+                Welcome to the <strong>GMDH (Group Method of Data Handling) Short-Term Wind Speed Prediction System.</strong>
+                This system is designed to provide accurate short-term wind speed forecasts using advanced machine learning techniques. 
+                GMDH is a powerful self-organizing algorithm that identifies patterns and relationships within data, making it 
+                particularly effective for time-series forecasting applications such as wind speed prediction.
+            </p>
+        </a>
+        <a href="#box2" class="box" id="box2">
+            <h3>Prediction Accuracy & Performance</h3>
+            <p>
+                This system leverages historical wind speed data, environmental conditions, and machine learning algorithms to
+                achieve high prediction accuracy, helping industries such as aviation and renewable energy.
+            </p>
+        </a>
+        <a href="#box3" class="box" id="box3">
+            <h3>Applications in Renewable Energy</h3>
+            <p>
+                Accurate short-term wind speed predictions are crucial for wind energy generation, ensuring stable power output 
+                and improving grid integration for sustainable energy solutions.
+            </p>
+        </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+        <a href="#box1">Intro</a>
+        <a href="#box2">Accuracy</a>
+        <a href="#box3">Renewable Energy</a>
+    </div>
+
+</body>
+</html>

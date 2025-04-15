@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimum Temperature Measurement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #111;
+            color: #fff;
+        }
+        nav {
+            background: #222;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #58c4f6;
+        }
+        .hero {
+            height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?cold,winter') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero h1 {
+            font-size: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .section {
+            padding: 80px 10%;
+            text-align: center;
+        }
+        .content-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .card {
+            width: 30%;
+            background: #222;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .card:hover {
+            transform: scale(1.05);
+            background: #333;
+        }
+        .card h2 {
+            margin-bottom: 15px;
+        }
+        .card p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .image-container img {
+            width: 60%;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 4px 15px rgba(255, 255, 255, 0.5);
+        }
+        footer {
+            padding: 20px;
+            background: #222;
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav>
+    <a href="#introduction">Introduction</a>
+    <a href="#measurement">How It’s Measured</a>
+    <a href="#importance">Why It’s Important</a>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero">
+    <h1>🌡️ Measuring Minimum Temperature 🌡️</h1>
+</div>
+
+<!-- Introduction Section -->
+<div class="section" id="introduction">
+    <h2>❄️ What is Minimum Temperature?</h2>
+    <p>Minimum temperature is the lowest temperature recorded in a day. It plays a key role in climate studies, frost prediction, and environmental monitoring.</p>
+    <div class="image-container">
+        <img src="https://source.unsplash.com/800x500/?snow,thermometer" alt="Thermometer in Cold Weather">
+    </div>
+</div>
+
+<!-- Measurement Methods Section -->
+<div class="section" id="measurement">
+    <h2>📏 How is Minimum Temperature Measured?</h2>
+    <div class="content-container">
+        <div class="card">
+            <h2>🌡️ Alcohol Thermometer</h2>
+            <p>Unlike mercury thermometers, alcohol thermometers are used for very low temperatures because alcohol does not freeze easily.</p>
+        </div>
+        <div class="card">
+            <h2>🌎 Digital Weather Stations</h2>
+            <p>Electronic sensors provide real-time monitoring of minimum temperature for weather forecasting.</p>
+        </div>
+        <div class="card">
+            <h2>📡 Satellites & Infrared Imaging</h2>
+            <p>Advanced climate models use infrared sensors in satellites to detect surface temperature variations.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Importance Section -->
+<div class="section" id="importance">
+    <h2>❄️ Why is Measuring Minimum Temperature Important?</h2>
+    <div class="content-container">
+        <div class="card">
+            <h2>🌨️ Frost & Agriculture</h2>
+            <p>Farmers monitor minimum temperatures to prevent crop damage from frost.</p>
+        </div>
+        <div class="card">
+            <h2>🏔️ Climate & Ecosystem Studies</h2>
+            <p>Understanding temperature variations helps in studying global warming and wildlife adaptations.</p>
+        </div>
+        <div class="card">
+            <h2>🚨 Cold Wave Warnings</h2>
+            <p>Monitoring low temperatures is crucial for issuing alerts during extreme cold weather events.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>© 2025 Weather Science | Stay Informed, Stay Safe</footer>
+
+</body>
+</html>
+

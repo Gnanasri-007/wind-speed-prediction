@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Introduction to GMDH</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0c29;
+      background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+      color: white;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header h1 {
+      font-size: 3em;
+      margin: 0;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: url('https://source.unsplash.com/1600x900/?technology,neon') no-repeat center/cover;
+      position: relative;
+      color: white;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .tab-button {
+      padding: 15px 25px;
+      margin: 0 10px;
+      background: #1f1c2c;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 30px;
+      font-size: 16px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .tab-button:hover {
+      background: #ff4b2b;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff4b2b;
+    }
+
+    .tab-content {
+      display: none;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .accordion {
+      width: 90%;
+      margin: 50px auto;
+    }
+
+    .accordion-item {
+      background: #1a1a2e;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: 20px;
+      cursor: pointer;
+      background: #16213e;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      background: #0f3460;
+    }
+
+    .accordion-content {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .accordion-item.active .accordion-content {
+      padding: 20px;
+      max-height: 300px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 30px auto;
+      background: linear-gradient(45deg, #f12711, #f5af19);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #f5af19;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #f5af19;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1b1b2f;
+      color: #aaa;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to GMDH World 🌐</h1>
+    <p>The Self-Organizing Algorithm That Thinks Like a Human</p>
+  </header>
+
+  <section class="hero">
+    <div class="content">
+      <h2>What is GMDH?</h2>
+      <p>GMDH (Group Method of Data Handling) is a powerful algorithm that automatically selects the best model for your data. It's like a self-evolving brain for predictions!</p>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab-button" onclick="showTab('intro')">📘 Introduction</button>
+    <button class="tab-button" onclick="showTab('use')">🛠️ How to Use</button>
+  </div>
+
+  <div id="intro" class="tab-content active">
+    <h3>📘 What is GMDH?</h3>
+    <p>GMDH is a machine learning method that automatically builds models based on data. It builds layers of models and selects the best performing combinations to optimize performance.</p>
+  </div>
+
+  <div id="use" class="tab-content">
+    <h3>🛠️ How to Use</h3>
+    <p>Enter the information asked in the below page for getting your required wind speed. The system uses GMDH to intelligently generate the most accurate prediction based on your input data.</p>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <div class="accordion-header">Why use GMDH over traditional ML models?</div>
+      <div class="accordion-content">
+        <p>Because GMDH builds the best model automatically! It reduces human bias in feature selection and optimizes prediction accuracy layer by layer.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header">Does GMDH require hyperparameter tuning?</div>
+      <div class="accordion-content">
+        <p>GMDH minimizes the need for manual tuning by evolving the model structure based on performance metrics, making it ideal for beginners and pros alike.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <div class="accordion-header">Is GMDH suitable for real-time systems?</div>
+      <div class="accordion-content">
+        <p>Yes! With modern optimization and GPU acceleration, GMDH can be adapted to real-time environments like weather systems or industrial control.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center">
+    <a href="{{ url_for('predict') }}" class="cta-button">Try It Now →</a>
+  </div>
+
+  <footer>
+    &copy; 2025 GMDH Explorer | Powered by Self-Organizing Systems
+  </footer>
+
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

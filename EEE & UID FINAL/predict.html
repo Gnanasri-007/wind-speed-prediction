@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Speed Prediction</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFC107, #FF5722);
+            opacity: 0.8;
+            z-index: -1;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background: linear-gradient(135deg, #FFC107, #FF5722); }
+            50% { background: linear-gradient(135deg, #FFCA28, #FF8A50); }
+            100% { background: linear-gradient(135deg, #FFC107, #FF5722); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        .title {
+            color: #FF5722;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #FF8A50;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #FFCA28;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:hover {
+            border-color: #FF8A50;
+            box-shadow: 0 0 8px rgba(255, 138, 80, 0.5);
+        }
+
+        .input-group input:focus {
+            border-color: #FF5722;
+            box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+            outline: none;
+        }
+
+        .submit-btn {
+            background: #FF5722;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            background: #FF8A50;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #FFF3E0;
+            border-radius: 10px;
+            color: #FF5722;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-box span {
+            color: #FFC107;
+        }
+
+        .error-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #FFE0E0;
+            border-radius: 10px;
+            color: #FF5722;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .logout-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #FFCA28;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #FFC107;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="background-gradient"></div>
+    <div class="container">
+        <h1 class="title"> Wind Speed Predictor</h1>
+        <form method="POST" id="weather-form">
+            <div class="input-group">
+                <label for="rain">Rain (mm):</label>
+                <input type="number" id="rain" name="rain" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="tmax">Tmax (°C):</label>
+                <input type="number" id="tmax" name="tmax" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="tmin">Tmin (°C):</label>
+                <input type="number" id="tmin" name="tmin" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="tmin_g">Tmin.G (°C):</label>
+                <input type="number" id="tmin_g" name="tmin_g" step="any" required>
+            </div>
+            <button type="submit" class="submit-btn">Predict Now</button>
+        </form>
+        {% if wind_speed %}
+            <div class="result-box">
+                <p>Predicted Wind Speed: <span>{{ wind_speed }}</span> m/s</p>
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="error-box">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+</body>
+</html>

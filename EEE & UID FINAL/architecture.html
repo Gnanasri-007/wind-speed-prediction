@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Architecture of GMDH</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212; /* Dark background matching the image */
+      color: #f1f1f1;
+      overflow-x: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 220px;
+      background-color: #1a1a1a;
+      padding-top: 60px;
+      padding-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 2px 0 10px rgba(0, 255, 255, 0.2); /* Cyan glow effect */
+    }
+
+    .sidebar img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.4); /* Cyan-blue glow */
+    }
+
+    .sidebar a {
+      padding: 15px 20px;
+      display: block;
+      color: #00ffff; /* Cyan text */
+      text-decoration: none;
+      transition: 0.3s;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); /* Neon effect */
+    }
+
+    .sidebar a:hover {
+      background-color: #00b7eb; /* Cyan-blue gradient-like hover */
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.9);
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 40px 60px;
+      line-height: 1.8;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00ffff; /* Cyan text */
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 191, 255, 0.5); /* Neon glow */
+    }
+
+    section {
+      margin-bottom: 60px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #1b1b1b;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.1); /* Subtle cyan glow */
+      transition: transform 0.3s, margin-bottom 0.3s;
+    }
+
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); /* Enhanced glow on hover */
+    }
+
+    .architecture-detail {
+      margin-top: 20px;
+      padding: 20px;
+      background: #2b2b2b;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.1);
+    }
+
+    .architecture-detail h3 {
+      font-size: 24px;
+      color: #00ffff; /* Cyan text */
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.7); /* Neon effect */
+    }
+
+    .architecture-detail p {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #111;
+      color: #888;
+      border-top: 1px solid #00b7eb; /* Cyan-blue border */
+      margin-top: 100px;
+      text-shadow: 0 0 2px rgba(0, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="gmdh1.png" alt="Logo">
+    <a href="#section1">Initial Population</a>
+    <a href="#section2">Evaluation and Selection</a>
+    <a href="#section3">Model Generation</a>
+    <a href="#section4">Complexity Reduction</a>
+    <a href="#section5">Stopping Criteria</a>
+    <a href="#section6">Final Model Selection</a>
+  </div>
+
+  <div class="main-content">
+    <h1>🔧 GMDH Architecture</h1>
+
+    <!-- Architecture Section -->
+    <section id="section1">
+      <h2>🧠 Initial Population Generation</h2>
+      <div class="architecture-detail">
+        <h3>1. Initial Population Generation</h3>
+        <p>GMDH begins by generating an initial population of candidate models. These models consist of polynomial functions, which represent different relationships between the features. The population is formed by selecting combinations of features and transformations, such as linear, quadratic, and higher-order polynomials.</p>
+      </div>
+    </section>
+
+    <section id="section2">
+      <h2>🧮 Evaluation and Selection</h2>
+      <div class="architecture-detail">
+        <h3>2. Evaluation and Selection</h3>
+        <p>Each candidate model is evaluated based on its performance on the training dataset. A fitness function is used to assess the accuracy of the model. The best-performing models are retained, while others are discarded. This process ensures that only the most promising models are carried forward to the next stages.</p>
+      </div>
+    </section>
+
+    <section id="section3">
+      <h2>🛠️ Model Generation and Layer Construction</h2>
+      <div class="architecture-detail">
+        <h3>3. Model Generation and Layer Construction</h3>
+        <p>In the subsequent layers, the best models from the previous layer are combined to generate new models. This iterative process helps in constructing increasingly accurate models. New layers are created by selecting combinations of polynomials from the previous layer, refining the model progressively.</p>
+      </div>
+    </section>
+
+    <section id="section4">
+      <h2>⚙️ Model Complexity Reduction</h2>
+      <div class="architecture-detail">
+        <h3>4. Model Complexity Reduction</h3>
+        <p>As the layers progress, GMDH reduces the complexity of the models. This is done by eliminating unnecessary features and components. Pruning techniques are employed to keep the model as simple as possible without losing accuracy.</p>
+      </div>
+    </section>
+
+    <section id="section5">
+      <h2>🛑 Stopping Criteria</h2>
+      <div class="architecture-detail">
+        <h3>5. Stopping Criteria</h3>
+        <p>The process continues until a predefined stopping criterion is met. This could be a set number of layers or a condition where the performance improvement becomes minimal. Once this criterion is met, the model construction process stops.</p>
+      </div>
+    </section>
+
+    <section id="section6">
+      <h2>🏁 Final Model Selection</h2>
+      <div class="architecture-detail">
+        <h3>6. Final Model Selection</h3>
+        <p>Once the process has completed, the final model is selected based on its performance. This model will be the one that best balances simplicity with accuracy, providing a robust solution for the given problem.</p>
+      </div>
+    </section>
+
+    <footer>© 2025 GMDH Explorer | Smart Models Made Smarter</footer>
+  </div>
+
+</body>
+</html>
